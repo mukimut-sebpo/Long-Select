@@ -12,6 +12,7 @@ export class AppComponent {
   optionList: optionsType[];
   simpleList: string[];
   switchValue = false;
+  stars = 6;
   
   constructor() {
     this.optionList = [];
@@ -20,6 +21,9 @@ export class AppComponent {
       this.optionList.push({option: 'Selection' + i, id: i});
       this.simpleList.push('Selection' + i)
     }
+  }
+
+  valueChanged() {console.log('Value is now ' + this.switchValue);
   }
 
 }
