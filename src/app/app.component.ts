@@ -7,7 +7,7 @@ type optionsType = {option: String, id: number}
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    
+  masterOptionList: optionsType[];  
   selectedValue = 'Nothing is selected';
   optionList: optionsType[];
   simpleList: string[];
@@ -15,15 +15,17 @@ export class AppComponent {
   stars = 6;
   
   constructor() {
-    this.optionList = [];
+    this.masterOptionList = [];
     this.simpleList = [];
     for(let i = 1; i <= 100; i++) {
-      this.optionList.push({option: 'Selection' + i, id: i});
+      this.masterOptionList.push({option: 'Selection' + i, id: i});
       this.simpleList.push('Selection' + i)
     }
+    this.optionList = this.masterOptionList.slice(0, 10);
   }
 
-  valueChanged() {console.log('Value is now ' + this.switchValue);
+  search(searchText: string) {
+    this.optionList = this.masterOptionList.filter(e => e.option.includes(searchText));
   }
 
 }

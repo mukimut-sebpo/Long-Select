@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChange, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -10,19 +10,24 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   }]
 })
 export class LSelectComponent implements OnInit, ControlValueAccessor {
+optionClicked(index: number) {
+  console.log(index);
+  
+}
+  listDisplay = 'none';
   @Input() list!: any[];
   @Input() displayKey!: string;
   @Input() idKey!: string;
+
+  @Output() typing = new EventEmitter<string>();
 
   inputValue!: string;
   takingInput = true;
   displayList!: any[];
 
-  //configs
-  delay = 750;
-  displayItems = 10;
-
+  
   constructor() { }
+
   writeValue(obj: any): void {
     throw new Error('Method not implemented.');
   }
@@ -38,20 +43,19 @@ export class LSelectComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit(): void {
     this.displayList = this.list.slice(0, 10);
-    console.log(this.displayList)
+  }
+
+  ngOnChanges() {
+    this.displayList = this.list.slice(0, 10);
   }
 
   inputChanged() {
-    if(!this.takingInput || !this.inputValue) {
-      return;
-    }
-    this.takingInput = false
-    setTimeout(() => {
-      this.displayList = this.list.filter(e => e[this.displayKey].includes(this.inputValue));
-      console.log(this.displayList);
-      this.takingInput = true;
-    }, this.delay);
-
+    this.displayList = this.list.filter(e => e[this.displayKey].includes(this.inputValue));
+    this.typing.emit(this.inputValue);
   }
 
+  onFocus() {this.listDisplay = 'block';}
+  blurred() {
+    // this.listDisplay = 'none';
+  }
 }

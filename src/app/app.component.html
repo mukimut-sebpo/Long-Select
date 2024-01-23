@@ -28,8 +28,8 @@
       </g>
     </svg>
 
-    <!-- <span><app-l-select [list]="optionList" [displayKey]="'option'" [idKey]="'id'"></app-l-select></span> -->
-    <app-rating-input [(ngModel)] = "stars"></app-rating-input>
+    <span><app-l-select [list]="optionList" [displayKey]="'option'" [idKey]="'id'" (typing)="search($event)"></app-l-select></span>
+    <!-- <app-rating-input [(ngModel)] = "stars"></app-rating-input> -->
     <!-- <app-switch [(ngModel)]="switchValue"></app-switch> -->
 
   
@@ -37,7 +37,7 @@
   </div>
 
   <!-- <h2>Switch is showing: {{switchValue}}</h2> -->
-  <h2>Number of stars is: {{stars}}</h2>
+  <!-- <h2>Number of stars is: {{stars}}</h2> -->
   
   
 

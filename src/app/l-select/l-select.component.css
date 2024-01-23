@@ -1,1 +1,19 @@
-.input {width: 100%;}
+
+#listContainer {
+    background-color: lightgrey;
+    width: 100%;
+    max-height: 560%;
+    position: absolute;
+    color: black;
+}
+
+.listItem {
+    padding: .1em;
+    padding-left: .5em;
+    cursor: default;
+}
+
+.listItem:hover {
+    color: white;
+    background-color: darkblue;
+}

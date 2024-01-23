@@ -18,7 +18,6 @@ export class SwitchComponent implements ControlValueAccessor {
   onChange: any = () => {};
   onTouched: any = () => {};
   
-  
   get value() {
     return this._value;
   }

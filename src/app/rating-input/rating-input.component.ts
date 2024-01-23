@@ -23,7 +23,6 @@ export class RatingInputComponent implements ControlValueAccessor {
     this.stars[0] = true;
   }
   
-
   writeValue(rating: number): void {
     if(rating > 5) {
       rating = 5
@@ -60,7 +59,7 @@ export class RatingInputComponent implements ControlValueAccessor {
   rate(rating: number) {
     this.stars = this.stars.map((_, i) => rating > i);
     this.onChange(rating);
-    this.onTouched()
+    this.onTouched();
   }
 
   
