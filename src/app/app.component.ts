@@ -13,6 +13,7 @@ export class AppComponent {
   simpleList: string[];
   switchValue = false;
   stars = 6;
+  selectedId: number = 1;
   
   constructor() {
     this.masterOptionList = [];

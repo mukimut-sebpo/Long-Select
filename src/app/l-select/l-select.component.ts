@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChange, forwardRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -10,14 +10,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   }]
 })
 export class LSelectComponent implements OnInit, ControlValueAccessor {
-optionClicked(index: number) {
-  console.log(index);
-  
-}
   listDisplay = 'none';
+  selectedId: any;
   @Input() list!: any[];
   @Input() displayKey!: string;
   @Input() idKey!: string;
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
   @Output() typing = new EventEmitter<string>();
 
@@ -25,20 +24,33 @@ optionClicked(index: number) {
   takingInput = true;
   displayList!: any[];
 
-  
   constructor() { }
 
-  writeValue(obj: any): void {
-    throw new Error('Method not implemented.');
+  writeValue(id: any): void {
+    if(!id) {
+      return;
+    }
+    this.selectedId = id;
+    const selectedItem = this.list.find(e => e[this.idKey] === id);
+    
+    this.inputValue = selectedItem[this.displayKey];
+    this.onChange(id);
+    this.onTouched();
+    this.removeListBox()
   }
+
   registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.');
+    this.onChange = fn;
   }
   registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
+    this.onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
     throw new Error('Method not implemented.');
+  }
+
+  get value(): any {
+    return this.selectedId;
   }
 
   ngOnInit(): void {
@@ -56,6 +68,10 @@ optionClicked(index: number) {
 
   onFocus() {this.listDisplay = 'block';}
   blurred() {
-    // this.listDisplay = 'none';
+    setTimeout(() => this.removeListBox(), 125);
+  }
+  
+  removeListBox() {
+    this.listDisplay = 'none';
   }
 }

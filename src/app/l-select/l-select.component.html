@@ -1,7 +1,7 @@
 <input type="text" class="input"  
     [(ngModel)]="inputValue" (ngModelChange) = inputChanged() (focus)="onFocus()" (blur)="blurred()" placeholder="Select and item">arrow
 <div id="listContainer" [style.display]="listDisplay">
-    <div class="listItem" *ngFor="let item of displayList" (click)="optionClicked(item[idKey])" >
+    <div class="listItem" *ngFor="let item of displayList" (click)="writeValue(item[idKey])" >
         {{item[displayKey]}}
     </div>
 </div>
