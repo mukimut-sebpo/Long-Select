@@ -15,8 +15,9 @@ export class LSelectComponent implements OnInit, ControlValueAccessor {
   @Input() list!: any[];
   @Input() displayKey!: string;
   @Input() idKey!: string;
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  onChange = (id: any) => {};
+  onTouched = () => {};
+  visibleListLength = 10;
 
   @Output() typing = new EventEmitter<string>();
 
@@ -39,10 +40,10 @@ export class LSelectComponent implements OnInit, ControlValueAccessor {
     this.removeListBox()
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (id: any) => void): void {
     this.onChange = fn;
   }
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
@@ -54,15 +55,15 @@ export class LSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit(): void {
-    this.displayList = this.list.slice(0, 10);
+    this.displayList = this.list.slice(0, this.visibleListLength);
   }
 
   ngOnChanges() {
-    this.displayList = this.list.slice(0, 10);
+    this.displayList = this.list.slice(0, this.visibleListLength);
   }
 
   inputChanged() {
-    this.displayList = this.list.filter(e => e[this.displayKey].includes(this.inputValue));
+    this.displayList = this.list.filter(e => (e[this.displayKey] as string).includes(this.inputValue));
     this.typing.emit(this.inputValue);
   }
 
